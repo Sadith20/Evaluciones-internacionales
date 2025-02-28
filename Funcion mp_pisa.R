@@ -8,12 +8,6 @@ library(openxlsx)
 # mostrar cifras significaticas (entero + decimal)
 options(digits=12)
 
-# ruta de trabajo
-setwd('C:/Users/estadisticaumc04/Downloads/Nueva carpeta')
-
-bd = import('CY08MS_PER_STU_CMB.sav')
-bd = bd %>% filter(STU_INTFLAG==1)
-
 mp_pisa = function(data, año, curso, estrato){
   # cantidad de valores plausibles y prefijo de los pesos replicados
   if(año < 2018){
