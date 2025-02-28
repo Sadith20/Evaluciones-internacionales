@@ -106,7 +106,6 @@ mp_pisa = function(data, año, curso, estrato){
   resultados_completos = do.call(rbind, resultados_por_estrato)
   
   # Devolver los resultados por estrato
-  write.xlsx(resultados_completos, paste0('MP ',curso,' ',estrato,'.xlsx'), rowNames = TRUE)
+  write.xlsx(resultados_completos, paste0('MP ',curso,' ',estrato,' ',año,'.xlsx'), rowNames = TRUE)
 }
-
 
