@@ -2,7 +2,6 @@ rm(list = ls())
 
 library(haven)
 library(tidyverse)
-library(writexl)
 library(rio)
 library(openxlsx)
 
