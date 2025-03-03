@@ -7,13 +7,6 @@ library(writexl)
 # mostrar cifras significaticas (entero + decimal)
 options(digits=8)
 
-# ruta de trabajo
-setwd('C:/Users/estadisticaumc04/Downloads/Nueva carpeta')
-
-bd = import('CY08MS_PER_STU_CMB.sav')
-bd = bd %>% filter(STU_INTFLAG==1)
-
-
 nl_pisa = function(bd, año, curso, estratos){
   # cantidad de valores plausibles y prefijo de los pesos replicados
   if(año < 2018){
