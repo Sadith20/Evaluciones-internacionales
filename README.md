@@ -45,7 +45,3 @@ El diseño muestral de ICCS es por conglomerados, estratificado y bietápico. La
 
 La base de datos de ICCS incluye 5 valores plausibles por cada área evaluada.
  
-
-
-# Cargar las funciones
-devtools::source_url("https://raw.githubusercontent.com/Sadith20/Evaluciones-internacionales/refs/heads/main/Funcion%20mp_pisa.R")
