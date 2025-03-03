@@ -16,8 +16,11 @@ Las principales variables a considerar en la base de datos son:
 - Lectura: PV1READ a PV10READ
 - Ciencias: PV1SCIE a PV10SCIE
 
-En el siguiente enlace se puede descargar la funcion para obtener la medida promedio : https://github.com/Sadith20/Evaluciones-internacionales/blob/main/Funcion%20mp_pisa.R
-En el siguiente enlace se puede descargar la funcion para obtener la medida promedio : https://github.com/Sadith20/Evaluciones-internacionales/blob/main/Funcion%20nl_pisa.R
+A continuación, se pueden descargar las funciones para el cálculo de la medida promedio y los niveles de logro en las evaluaciones internacionales:
+
+Medida promedio : devtools::source_url("https://raw.githubusercontent.com/Sadith20/Evaluciones-internacionales/refs/heads/main/Funcion%20mp_pisa.R")
+
+Niveles de logro : devtools::source_url("https://raw.githubusercontent.com/Sadith20/Evaluciones-internacionales/refs/heads/main/Funcion%20nl_pisa.R")
 
  ## LLECE
 El estudio TERCE/ERCE evalúa a estudiantes de tercero y sexto grado de primaria en diversas áreas del conocimiento.
