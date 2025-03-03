@@ -33,9 +33,14 @@ La base de datos de TERCE/ERCE incluye 5 valores plausibles por cada área evalu
 
 Las principales variables a considerar en la base de datos son:
 
-Peso final del estudiante: wgl, wgm, wgc
-Pesos replicados: BRR1 a BRR100
-Valores plausibles por área evaluada: VP1 a VP5
+- Peso final del estudiante: wgl, wgm, wgc
+- Pesos replicados: BRR1 a BRR100
+- Valores plausibles por área evaluada: VP1 a VP5
+
+A continuación, se pueden descargar las funciones para el cálculo de la medida promedio y los niveles de logro en las evaluaciones internacionales:
+
+Medida promedio : devtools::source_url("https://raw.githubusercontent.com/Sadith20/Evaluciones-internacionales/refs/heads/main/Funcion%20mp_erce.R")
+
  
 
  ## ICCS
