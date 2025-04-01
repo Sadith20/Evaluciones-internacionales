@@ -10,7 +10,7 @@ options(digits=12)
 
 mp_pisa = function(data, año, curso, estrato){
   # cantidad de valores plausibles y prefijo de los pesos replicados
-  if(año < 2018){
+  if(año < 2015){
     M = 5
     pre_pe_re = 'W_FSTR'
   } else {
