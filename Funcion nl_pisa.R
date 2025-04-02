@@ -9,7 +9,7 @@ options(digits=8)
 
 nl_pisa = function(bd, año, curso, estratos){
 
-  # cantidad de valores plausibles y prefijo de los pesos replicados
+  # canbase# cantidad de valores plausibles y prefijo de los pesos replicados
   if(año < 2015){
     M = 5
     pre_pe_re = 'W_FSTR'
@@ -42,7 +42,7 @@ nl_pisa = function(bd, año, curso, estratos){
   res = NULL
   
   for (z in 1:length(unique(bd[[estratos]]))){
-    
+
     bd_n = bd %>% filter(bd[[estratos]]==z)
     
     # numero de categorias
@@ -129,7 +129,7 @@ nl_pisa = function(bd, año, curso, estratos){
   }
   
    res = res %>% select(Estrato,categorias,porcentajes,ee)
-   res = res[-c(10,20),]
+   res = res[-c(num_cat-1,2*num_cat-2),]
    res_estrato1 = res$categorias[res$Estrato == 1]
    res$categorias[res$Estrato == 2] = res_estrato1
   
