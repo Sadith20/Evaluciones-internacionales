@@ -8,8 +8,9 @@ library(writexl)
 options(digits=8)
 
 nl_pisa = function(bd, año, curso, estratos){
+
   # cantidad de valores plausibles y prefijo de los pesos replicados
-  if(año < 2018){
+  if(año < 2015){
     M = 5
     pre_pe_re = 'W_FSTR'
   } else {
@@ -38,19 +39,14 @@ nl_pisa = function(bd, año, curso, estratos){
     puntos_de_corte = c(260.54, 334.94, 409.54, 484.14, 558.73, 633.33, 707.93)
   }
   
-  # numero de categorias
-  num_cat = length(puntos_de_corte) + 1
+  res = NULL
   
-  # dividir la base de datos por estrato
-  bd_por_estrato = split(bd, bd[[estratos]])
-  
-  # Crear lista para almacenar los resultados por estrato
-  resultados_por_estrato <- list()
-  
-  # procesar cada estrato
-  for(estrato_categoria in names(bd_por_estrato)){
-    # extraer datos para el estrato actual
-    bd_estrato = bd_por_estrato[[estrato_categoria]]
+  for (z in 1:length(unique(bd[[estratos]]))){
+    
+    bd_n = bd %>% filter(bd[[estratos]]==z)
+    
+    # numero de categorias
+    num_cat = length(puntos_de_corte) + 1
     
     # Crear matriz de 'num_cat * M' col vacias y 'G+2' filas
     tab = as.data.frame(matrix(data = NA, nrow = G + 2, ncol = num_cat * M, byrow = TRUE))
@@ -75,73 +71,72 @@ nl_pisa = function(bd, año, curso, estratos){
       textos = paste0('PV', 1:M, 'SCIE')
     }
     
-    # llenar la tabla de resultados
+    # llenar tab
     for (k in 1:M) {
-      texto_k = textos[k]
+      texto_k=textos[k]
       
-      for (i in 1:num_cat) {
-        categorias = paste0("Cat", i, " VP", k)
+      for (i in 1:num_cat){
+        categorias=paste0("Cat ",i," VP",k)
         
-        # asignar categorías a la base de datos
-        bd_estrato[, categorias] = ifelse(bd_estrato[, texto_k] > puntos_de_corte[i] & bd_estrato[, texto_k] <= puntos_de_corte[i+1], 1, 0)
-        tab[1, (i + num_cat * (k - 1))] = weighted.mean(bd_estrato[, categorias], bd_estrato[, peso_final], na.rm = TRUE) * 100
+        bd_n[,categorias]=ifelse(bd_n[,texto_k]>puntos_de_corte[i] & bd_n[,texto_k]<=puntos_de_corte[i+1], 1, 0)
+        tab[1,(i+num_cat*(k-1))]=weighted.mean(bd_n[,categorias], bd_n[,peso_final], na.rm=T)*100
         
-        for (j in 1:G) {
-          replica = paste0(pre_pe_re, j)
-          tab[1 + j, (i + num_cat * (k - 1))] = weighted.mean(bd_estrato[, categorias], bd_estrato[, replica], na.rm = TRUE) * 100
-          temp = temp + (tab[1 + j, (i + num_cat * (k - 1))] - tab[1, (i + num_cat * (k - 1))])^2
+        for (j in 1:G){
+          replica=paste0(pre_pe_re,j)
+          tab[1+j,(i+num_cat*(k-1))]=weighted.mean(bd_n[,categorias], bd_n[,replica], na.rm=T)*100
+          temp=temp+(tab[1+j,(i+num_cat*(k-1))]-tab[1,(i+num_cat*(k-1))])^2
         }
-        
-        tab[G + 2, (i + num_cat * (k - 1))] = temp / denominador
-        temp = 0
+        tab[G+2,i+num_cat*(k-1)]=temp/denominador
+        temp=0
       }
     }
     
-    # Porcentajes de niveles de logro
-    porcentajes = rep(0, num_cat)
-    for (i in 1:num_cat) {
-      porcentajes[i] = 0
-      for (j in 0:(M - 1)) porcentajes[i] = porcentajes[i] + tab[1, i + num_cat * j]
-      porcentajes[i] = porcentajes[i] / M
+    # Porcentajes de niveles de logro (PDF pag 120)
+    # para cada categoria, promedio simple de sus 'M' copias de porcentajes
+    porcentajes=rep(0,num_cat)
+    for(i in 1:num_cat){
+      porcentajes[i]=0
+      for(j in 0:(M-1)) porcentajes[i]=porcentajes[i]+tab[1,i+num_cat*j]
+      porcentajes[i]=porcentajes[i]/M
     }
     
-    # varianza muestral final
-    sampvar = rep(0, num_cat)
-    for (i in 1:num_cat) {
-      sampvar[i] = 0
-      for (j in 0:(M - 1)) sampvar[i] = sampvar[i] + tab[G + 2, i + num_cat * j]
-      sampvar[i] = sampvar[i] / M
+    # varianza muestral final (PDF pag 120)
+    # para cada categoria, promedio simple de sus 'M' copias de varianzas muestrales
+    sampvar=rep(0,num_cat)
+    for(i in 1:num_cat){
+      sampvar[i]=0
+      for(j in 0:(M-1)) sampvar[i]=sampvar[i]+tab[G+2,i+num_cat*j]
+      sampvar[i]=sampvar[i]/M
     }
     
-    # varianzas del test
-    var_test = rep(0, num_cat)
-    for (i in 1:num_cat) {
-      var_test[i] = 0
-      for (j in 0:(M - 1)) var_test[i] = var_test[i] + (tab[1, i + num_cat * j] - porcentajes[i])^2
-      var_test[i] = var_test[i] / (M - 1)
+    # varianzas del test, para cada categoria (PDF pag 120)
+    var_test=rep(0,num_cat)
+    for(i in 1:num_cat){
+      var_test[i]=0
+      for(j in 0:(M-1)) var_test[i]=var_test[i]+(tab[1,i+num_cat*j]-porcentajes[i])^2
+      var_test[i]=var_test[i]/(M-1)
     }
     
-    # error estándar
-    ee = sqrt(sampvar + (1 + 1 / M) * var_test)
+    # error estandar, para cada categoria (PDF pag 121)
+    ee=sqrt(sampvar+(1+1/M)*var_test)
     
-    # almacenar resultados para el estrato
-    resultado = data.frame(categorias = paste0('cat', 1:num_cat), porcentajes, ee)
-    resultado$estrato = estrato_categoria
+    # poner en tabla los porcentajes y ee
+    resultado=data.frame(categorias=paste0('cat',1:num_cat), porcentajes, ee)
+    resultado$Estrato = z
     
-    # almacenar los resultados del estrato en la lista
-    resultados_por_estrato[[estrato_categoria]] = resultado
+    res = rbind(res,resultado)
+    
   }
   
-  # combinar los resultados de todos los estratos
-  resultados_completos = do.call(rbind, resultados_por_estrato)
-  
-  # imprimir los resultados finales
-  resultados_completos = resultados_completos %>% select(estrato,categorias,porcentajes,ee)
+   res = res %>% select(Estrato,categorias,porcentajes,ee)
+   res = res[-c(10,20),]
+   res_estrato1 = res$categorias[res$Estrato == 1]
+   res$categorias[res$Estrato == 2] = res_estrato1
   
   # Devolver los resultados por estrato
-  write.xlsx(resultados_completos, paste0('NL ',curso,' ',estratos,' ',año,'.xlsx'), rowNames = FALSE)
+  write.xlsx(res, paste0('NL ',curso,' ',estratos,' ',año,'.xlsx'), rowNames = FALSE)
+  
 }
-
 
 
 
