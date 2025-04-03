@@ -121,9 +121,14 @@ nl_pisa = function(bd, año, curso, estratos){
   }
   
    res = res %>% select(Estrato,categorias,porcentajes,ee)
-   res = res[-c(num_cat-1,2*num_cat-2),]
-   res_estrato1 = res$categorias[res$Estrato == variables[1]]
-   res$categorias[res$Estrato == variables[2]] = res_estrato1
+   if(estratos=='CNT'){
+     res
+   }else{
+     res = res[-c(num_cat-1,2*num_cat-2),]
+     res_estrato1 = res$categorias[res$Estrato == variables[1]]
+     res$categorias[res$Estrato == variables[2]] = res_estrato1
+   }
+
   
   # Devolver los resultados por estrato
   export(res, paste0('NL ',curso,' ',estratos,' ',año,'.xlsx'))
