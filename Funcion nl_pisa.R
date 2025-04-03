@@ -1,14 +1,4 @@
-rm(list = ls())
-
-library(haven)
-library(tidyverse)
-library(writexl)
-
-# mostrar cifras significaticas (entero + decimal)
-options(digits=8)
-
 nl_pisa = function(bd, año, curso, estratos){
-
   # canbase# cantidad de valores plausibles y prefijo de los pesos replicados
   if(año < 2015){
     M = 5
@@ -42,8 +32,10 @@ nl_pisa = function(bd, año, curso, estratos){
   res = NULL
   
   for (z in 1:length(unique(bd[[estratos]]))){
+    
+    variables =unique(bd[[estratos]])
 
-    bd_n = bd %>% filter(bd[[estratos]]==z)
+    bd_n = bd %>% filter(bd[[estratos]]==variables[z])
     
     # numero de categorias
     num_cat = length(puntos_de_corte) + 1
@@ -122,7 +114,7 @@ nl_pisa = function(bd, año, curso, estratos){
     
     # poner en tabla los porcentajes y ee
     resultado=data.frame(categorias=paste0('cat',1:num_cat), porcentajes, ee)
-    resultado$Estrato = z
+    resultado$Estrato = variables[z]
     
     res = rbind(res,resultado)
     
@@ -130,11 +122,11 @@ nl_pisa = function(bd, año, curso, estratos){
   
    res = res %>% select(Estrato,categorias,porcentajes,ee)
    res = res[-c(num_cat-1,2*num_cat-2),]
-   res_estrato1 = res$categorias[res$Estrato == 1]
-   res$categorias[res$Estrato == 2] = res_estrato1
+   res_estrato1 = res$categorias[res$Estrato == variables[1]]
+   res$categorias[res$Estrato == variables[2]] = res_estrato1
   
   # Devolver los resultados por estrato
-  write.xlsx(res, paste0('NL ',curso,' ',estratos,' ',año,'.xlsx'), rowNames = FALSE)
+  export(res, paste0('NL ',curso,' ',estratos,' ',año,'.xlsx'))
   
 }
 
