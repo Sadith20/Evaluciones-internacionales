@@ -11,15 +11,15 @@ options(digits=12)
 
 
 mp_ERCE = function(data, año, grado, curso, estrato){
-  
   # cantidad de valores plausibles y prefijo de los pesos replicados
-    M = 5
-    pre_pe_re='BRR'
+  M = 5
+  pre_pe_re='BRR'
+    
   # numero de replicas
-    G = 100
+  G = 100
   
   # var de peso final
-    if (año<2014 & curso=='Lectura') {
+  if (año<2014 & curso=='Lectura') {
       peso_final='wgl'
     }else if(año<2014 & curso=='Matematica'){
       peso_final='wgm'
@@ -29,7 +29,6 @@ mp_ERCE = function(data, año, grado, curso, estrato){
       peso_final = 'WT'
     }
     
-  
   # Crear una lista para almacenar los resultados por estrato
   resultados_por_estrato <- list()
   
@@ -38,7 +37,6 @@ mp_ERCE = function(data, año, grado, curso, estrato){
   
   # Para cada grupo de estrato
   for (estrato_categoria in names(bd_por_estrato)) {
-    
   # Extraer los datos del estrato actual
     bd = bd_por_estrato[[estrato_categoria]]
     
@@ -46,7 +44,13 @@ mp_ERCE = function(data, año, grado, curso, estrato){
     tab = as.data.frame(matrix(data = NA, nrow = G + 2, ncol = M, byrow = TRUE))
     
     # llenar la 1ra fila de tab
-      textos = paste0('VP',1:M)
+    if(curso=='LEC'){
+      textos = paste0('LAN_', 1:M)
+    }else if (curso=='MAT'){
+      textos = paste0('MAT_', 1:M)
+    }else{
+      textos = paste0('SCI_', 1:M)
+    }
     
     for (i in 1:M) {
       plausible = textos[i]
