@@ -9,7 +9,6 @@ library(openxlsx)
 # mostrar cifras significaticas (entero + decimal)
 options(digits=12)
 
-
 mp_ERCE = function(data, año, grado, curso, estrato){
   # cantidad de valores plausibles y prefijo de los pesos replicados
   M = 5
@@ -105,5 +104,4 @@ mp_ERCE = function(data, año, grado, curso, estrato){
   # Devolver los resultados por estrato
   write.xlsx(resultados_completos, paste0('MP ',grado,' ',curso,' ',estrato,' ',año,'.xlsx'), rowNames = TRUE)
 }
-
 
