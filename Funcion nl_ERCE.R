@@ -18,8 +18,8 @@ round2 = function(x, n) {
 # mostrar cifras significaticas (entero + decimal)
 options(digits=8)
 
-nl_erce = function(bd,año,grado,curso, estratos){
-  # cantidad de valores plausibles y prefijo de los pesos replicados
+nl_ERCE = function(bd,año,grado,curso, estratos){
+  # canbase# cantidad de valores plausibles y prefijo de los pesos replicados
   M = 5
   pre_pe_re = 'BRR'
   
@@ -60,7 +60,6 @@ nl_erce = function(bd,año,grado,curso, estratos){
   res = NULL
   
   for (z in 1:length(unique(bd[[estratos]]))){
-    z=1
     variables =unique(bd[[estratos]])
 
     bd_n = bd %>% filter(bd[[estratos]]==variables[z])
@@ -91,20 +90,19 @@ nl_erce = function(bd,año,grado,curso, estratos){
       textos = paste0('SCI', 1:M, '_N')
     }
     
-  
     # llenar tab
     for (k in 1:M) {
       texto_k=textos[k]
       
       for (i in 1:num_cat){
-
         categorias=paste0("Cat ",i," VP",k)
         
         bd_n[,categorias]=ifelse(bd_n[,texto_k]>=puntos_de_corte[i] & bd_n[,texto_k]<puntos_de_corte[i+1], 1, 0)
         tab[1,(i+num_cat*(k-1))]=weighted.mean(bd_n[,categorias], bd_n[,peso_final], na.rm=T)*100
         
         for (j in 1:G){
-      replica=paste0(pre_pe_re,j)
+
+        replica=paste0(pre_pe_re,j)
           tab[1+j,(i+num_cat*(k-1))]=weighted.mean(bd_n[,categorias], bd_n[,replica], na.rm=T)*100
           temp=temp+(tab[1+j,(i+num_cat*(k-1))]-tab[1,(i+num_cat*(k-1))])^2
         }
@@ -117,7 +115,6 @@ nl_erce = function(bd,año,grado,curso, estratos){
     # para cada categoria, promedio simple de sus 'M' copias de porcentajes
     porcentajes=rep(0,num_cat)
     for(i in 1:num_cat){
-      i=1
       porcentajes[i]=0
       for(j in 0:(M-1)) porcentajes[i]=porcentajes[i]+tab[1,i+num_cat*j]
       porcentajes[i]=porcentajes[i]/M
@@ -152,7 +149,7 @@ nl_erce = function(bd,año,grado,curso, estratos){
   }
   
    res = res %>% select(Estrato,categorias,porcentajes,ee)
-   if(estratos=='IDCNTRY'){
+   if(estratos=='COUNTRY'){
      res
    }else{
      res = res[-c(num_cat-1,2*num_cat-2),]
@@ -164,7 +161,6 @@ nl_erce = function(bd,año,grado,curso, estratos){
   export(res, paste0('NL_',grado,'_',curso,'_',estratos,'_',año,'.xlsx'))
   
 }
-
 
 
 
