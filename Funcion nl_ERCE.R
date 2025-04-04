@@ -18,11 +18,6 @@ round2 = function(x, n) {
 # mostrar cifras significaticas (entero + decimal)
 options(digits=8)
 
-# ruta de trabajo
-setwd('E:/SYRA/SYRA_ordenado/Resultados de ERCE y funcion')
-
-base = import('ERCE_2019_QA3 Peru.sav')
-
 nl_erce = function(bd,año,grado,curso, estratos){
   # cantidad de valores plausibles y prefijo de los pesos replicados
   M = 5
@@ -65,6 +60,7 @@ nl_erce = function(bd,año,grado,curso, estratos){
   res = NULL
   
   for (z in 1:length(unique(bd[[estratos]]))){
+    z=1
     variables =unique(bd[[estratos]])
 
     bd_n = bd %>% filter(bd[[estratos]]==variables[z])
@@ -98,7 +94,6 @@ nl_erce = function(bd,año,grado,curso, estratos){
   
     # llenar tab
     for (k in 1:M) {
-
       texto_k=textos[k]
       
       for (i in 1:num_cat){
@@ -109,7 +104,7 @@ nl_erce = function(bd,año,grado,curso, estratos){
         tab[1,(i+num_cat*(k-1))]=weighted.mean(bd_n[,categorias], bd_n[,peso_final], na.rm=T)*100
         
         for (j in 1:G){
-          replica=paste0(pre_pe_re,j)
+      replica=paste0(pre_pe_re,j)
           tab[1+j,(i+num_cat*(k-1))]=weighted.mean(bd_n[,categorias], bd_n[,replica], na.rm=T)*100
           temp=temp+(tab[1+j,(i+num_cat*(k-1))]-tab[1,(i+num_cat*(k-1))])^2
         }
@@ -122,6 +117,7 @@ nl_erce = function(bd,año,grado,curso, estratos){
     # para cada categoria, promedio simple de sus 'M' copias de porcentajes
     porcentajes=rep(0,num_cat)
     for(i in 1:num_cat){
+      i=1
       porcentajes[i]=0
       for(j in 0:(M-1)) porcentajes[i]=porcentajes[i]+tab[1,i+num_cat*j]
       porcentajes[i]=porcentajes[i]/M
@@ -164,14 +160,11 @@ nl_erce = function(bd,año,grado,curso, estratos){
      res$categorias[res$Estrato == variables[2]] = res_estrato1
    }
 
-  
   # Devolver los resultados por estrato
-  export(res, paste0('NL ',curso,' ',estratos,' ',año,'.xlsx'))
+  export(res, paste0('NL_',grado,'_',curso,'_',estratos,'_',año,'.xlsx'))
   
 }
 
-nl_erce(base,2019,'3P','LEC','IDCNTRY')
-nl_erce(base,2019,'3P','LEC','SEX')
 
 
 
