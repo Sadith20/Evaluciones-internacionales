@@ -40,7 +40,7 @@ Las principales variables a considerar en la base de datos son:
 A continuación, se pueden descargar las funciones para el cálculo de la medida promedio y los niveles de logro en las evaluaciones internacionales:
 
 Medida promedio : devtools::source_url("https://raw.githubusercontent.com/Sadith20/Evaluciones-internacionales/refs/heads/main/Funcion%20mp_erce.R")
-
+Niveles de logro : devtools::source_url("https://raw.githubusercontent.com/Sadith20/Evaluciones-internacionales/refs/heads/main/Funcion%20nl_ERCE.R")
  
 
  ## ICCS
