@@ -47,15 +47,15 @@ Niveles de logro : devtools::source_url("https://raw.githubusercontent.com/Sadit
    
 Ambas funciones requieren los siguientes argumentos:
 
-data: Base de datos con la información a procesar.
+* data: Base de datos con la información a procesar.
 
-estrato: Nivel de desagregación para los resultados del estudio. Puede ser por país (COUNTRY), por sexo (SEX), por área geográfica (RURAL), o por tipo de gestión de la institución educativa (DEP).
+* estrato: Nivel de desagregación para los resultados del estudio. Puede ser por país (COUNTRY), por sexo (SEX), por área geográfica (RURAL), o por tipo de gestión de la institución educativa (DEP).
 
-grado: Nivel educativo evaluado. En el ERCE se consideran dos grados: 3P (tercer grado de primaria) y 6P (sexto grado de primaria).
+* grado: Nivel educativo evaluado. En el ERCE se consideran dos grados: 3P (tercer grado de primaria) y 6P (sexto grado de primaria).
 
-curso: Asignatura evaluada. En el TERCE se incluyen Lectura, Matemática y Ciencias solo para sexto grado de primaria.
+* curso: Asignatura evaluada. En el TERCE se incluyen Lectura, Matemática y Ciencias solo para sexto grado de primaria.
 
-año: Año del estudio, que puede ser 2013 o 2019.
+* año: Año del estudio, que puede ser 2013 o 2019.
 
 Medida promedio : devtools::source_url("https://raw.githubusercontent.com/Sadith20/Evaluciones-internacionales/refs/heads/main/Funcion_MP_ERCE_VF.R")
 Niveles de logro : devtools::source_url("https://raw.githubusercontent.com/Sadith20/Evaluciones-internacionales/refs/heads/main/Funcion_NL_ERCE_VF.R")
