@@ -47,7 +47,7 @@ Niveles de logro : devtools::source_url("https://raw.githubusercontent.com/Sadit
    
 Ambas funciones requieren los siguientes argumentos:
 
-* data *: Base de datos con la información a procesar.
+** data : Base de datos con la información a procesar.
 
 * estrato: Nivel de desagregación para los resultados del estudio. Puede ser por país (COUNTRY), por sexo (SEX), por área geográfica (RURAL), o por tipo de gestión de la institución educativa (DEP).
 
