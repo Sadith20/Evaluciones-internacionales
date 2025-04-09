@@ -18,11 +18,6 @@ round2 = function(x, n) {
 # mostrar cifras significaticas (entero + decimal)
 options(digits=8)
 
-# ruta de trabajo
-setwd('F:/SYRA/SYRA_ordenado/Resultados de ERCE y funcion')
-
-base = import('ERCE_2019_QA3 Peru.sav')
-
 MP_ERCE = function(data,estrato,grado,curso,año){
  # cantidad de valores plausibles y prefijo de los pesos replicados
   cant_vp = 5
