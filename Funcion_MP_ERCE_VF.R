@@ -97,9 +97,5 @@ MP_ERCE = function(data,estrato,grado,curso,año){
   
 }
 
-MP_ERCE(base,'COUNTRY','3P','Lectura','2019')
-MP_ERCE(base,'SEX','3P','Lectura','2019')
-MP_ERCE(base,'RURAL','3P','Lectura','2019')
-MP_ERCE(base,'DEP','3P','Lectura','2019')
 
 
