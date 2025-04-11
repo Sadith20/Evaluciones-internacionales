@@ -18,11 +18,6 @@ round2 = function(x, n) {
 # mostrar cifras significaticas (entero + decimal)
 options(digits=8)
 
-# ruta de trabajo
-setwd('E:/SYRA/SYRA_ordenado/Resultados de ERCE y funcion')
-
-base = import('ERCE_2019_QA3 Peru.sav')
-
 NL_ERCE = function(data,estrato,grado,curso,año){
   data = base
   estrato = 'SEX'
