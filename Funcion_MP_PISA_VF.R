@@ -18,12 +18,6 @@ round2 = function(x, n) {
 # mostrar cifras significaticas (entero + decimal)
 options(digits=8)
 
-# ruta de trabajo
-setwd('F:/SYRA/SYRA_ordenado/Resultados de PISA y funcion')
-
-base = import('CY08MS_PER_STU_CMB.sav')
-base = base %>% filter(STU_INTFLAG==1)
-
 MP_PISA = function(data,estrato,curso,año){
   # cantidad de valores plausibles y prefijo de los pesos replicados
   if(año<2015){
@@ -108,6 +102,3 @@ MP_PISA = function(data,estrato,curso,año){
   
 }
 
-MP_PISA(base,'CNT','Lectura',2022)
-MP_PISA(base,'TFGender','Lectura',2022)
-MP_PISA(base,'TFGender','Lectura',2022)
