@@ -19,11 +19,7 @@ round2 = function(x, n) {
 options(digits=8)
 
 NL_ERCE = function(data,estrato,grado,curso,año){
-  data = base
-  estrato = 'SEX'
-  grado = '3P'
-  curso = 'Lectura'
-  año = '2019'
+
   
 # cantidad de valores plausibles y prefijo de los pesos replicados
 cant_vp = 5
