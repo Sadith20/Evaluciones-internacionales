@@ -133,8 +133,4 @@ for (z in 1:length(unique(data[[estrato]]))) {
   export(resultado_f, paste0('NL_',grado,'_',curso,'_',estrato,'_',año,'.xlsx'), rowNames = TRUE)
 }
 
-NL_ERCE(base,'COUNTRY','3P','Lectura','2019')
-NL_ERCE(base,'SEX','3P','Lectura','2019')
 
-NL_ERCE(base,'COUNTRY','3P','Matematica','2019')
-NL_ERCE(base,'SEX','3P','Matematica','2019')
